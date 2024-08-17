@@ -8,7 +8,8 @@ public class SubsMemberTwo : MonoBehaviour
 
     private void Awake()
     {
-        Event._customDelegate += OnEventLalala;
+        /*Event._customDelegate += OnEventLalala;*/
+        Event._customAction += OnEventLalala;
     }
     public void OnEventLalala()
     {

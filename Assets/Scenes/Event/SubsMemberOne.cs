@@ -8,7 +8,8 @@ public class SubsMemberOne : MonoBehaviour
 
     private void Awake()
     {
-        Event._customDelegate += OnEventMakerInvoked;
+        /*Event._customDelegate += OnEventMakerInvoked;*/
+        Event._customAction += OnEventMakerInvoked;
     }
     public void OnEventMakerInvoked()
     {
