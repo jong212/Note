@@ -8,12 +8,29 @@ public class Event : MonoBehaviour
     [SerializeField] SubsMemberTwo Member_Two;
     [SerializeField] Animator Animator_Player;
 
+    delegate void ImDelegate();
+    ImDelegate _customDelegate;
+
+    private void Start()
+    {
+        _customDelegate = new ImDelegate(InvokeEvent);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            InvokeEvent();
+            _customDelegate += InvokeEventTwo;
+            //InvokeEvent();
+            _customDelegate();
+
+            _customDelegate -= InvokeEventTwo;
         }
+    }
+
+    private void InvokeEventTwo()
+    {
+        Animator_Player.SetTrigger("LevelUp");
     }
 
     private void InvokeEvent()
