@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class SubsMemberTwo : MonoBehaviour
 {
+    [SerializeField] Event EventMaker_Publisher;
     [SerializeField] Animator Animator_SubMember;
 
-    private void Awake()
+    private void OnEnable()
     {
-        /*Event._customDelegate += OnEventLalala;*/
-        Event._customAction += OnEventLalala;
+        var gObj = GameObject.Find("Invoker");
+        EventMaker_Publisher = gObj.GetComponent<Event>();
+
+        if (EventMaker_Publisher != null)
+        {
+            EventMaker_Publisher.Subscribe(isSubscribe: true, OnEventMakerLalala);
+        }
     }
-    public void OnEventLalala(int a)
+
+    private void OnDisable()
+    {
+        if (EventMaker_Publisher != null)
+        {
+            EventMaker_Publisher.Subscribe(isSubscribe: false, OnEventMakerLalala);
+        }
+
+    }
+
+    public void OnEventMakerLalala()
     {
         Animator_SubMember.SetTrigger("LevelUp");
     }
+
 }

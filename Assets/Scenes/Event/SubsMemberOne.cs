@@ -1,17 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class SubsMemberOne : MonoBehaviour
 {
+    [SerializeField] Event EventMaker_Publisher;
     [SerializeField] Animator Animator_SubMember;
 
-    private void Awake()
+    private void OnEnable()
     {
-        /*Event._customDelegate += OnEventMakerInvoked;*/
-        Event._customAction += OnEventMakerInvoked;
+        var gObj = GameObject.Find("Invoker");
+        EventMaker_Publisher = gObj.GetComponent<Event>();
+
+        if (EventMaker_Publisher != null)
+        {
+            EventMaker_Publisher.Subscribe(isSubscribe: true, OnEventMakerInvoked);
+        }
     }
-    public void OnEventMakerInvoked(int a)
+
+    private void OnDisable()
+    {
+        if (EventMaker_Publisher != null)
+        {
+            EventMaker_Publisher.Subscribe(isSubscribe: false, OnEventMakerInvoked);
+        }
+
+    }
+
+    public void OnEventMakerInvoked()
     {
         Animator_SubMember.SetTrigger("Atk");
     }
