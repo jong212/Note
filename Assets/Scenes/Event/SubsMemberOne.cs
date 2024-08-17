@@ -10,23 +10,14 @@ public class SubsMemberOne : MonoBehaviour
 
     private void OnEnable()
     {
-        var gObj = GameObject.Find("Invoker");
-        EventMaker_Publisher = gObj.GetComponent<Event>();
-
-        if (EventMaker_Publisher != null)
-        {
-            EventMaker_Publisher.Subscribe(isSubscribe: true, OnEventMakerInvoked);
-        }
+        EventManager.Inst.RequestSubscribe(true, OnEventMakerInvoked);
     }
 
     private void OnDisable()
     {
-        if (EventMaker_Publisher != null)
-        {
-            EventMaker_Publisher.Subscribe(isSubscribe: false, OnEventMakerInvoked);
-        }
-
+        EventManager.Inst.RequestSubscribe(false, OnEventMakerInvoked);
     }
+
 
     public void OnEventMakerInvoked()
     {

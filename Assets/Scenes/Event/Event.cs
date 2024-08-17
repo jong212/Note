@@ -3,24 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event : MonoBehaviour
+public class Event : MonoBehaviour, IEvenMake
 {
     [SerializeField] Animator Animator_Player;
 
-    public delegate void ImDelegate();
-    ImDelegate _delegate;
+    Action _eventInvokHandler;
 
     private void Start()
     {
+        EventManager.Inst.RegisterCurEventmaker(true, this);
+    }
+
+    private void OnDisable()
+    {
+        _eventInvokHandler = null;
     }
 
     // 보통 Subscribe보다 Register 또는 AddEvent 등의 용어를 쓴다 - 예제는 구독이라는 의미로 그냥 사용
-    public void Subscribe(bool isSubscribe, ImDelegate callback)
+    public void Subscribe(bool isSubscribe, Action callback)
     {
         if (isSubscribe)
-            _delegate += callback;
+            _eventInvokHandler += callback;
         else
-            _delegate -= callback;
+            _eventInvokHandler -= callback;
     }
 
     private void Update()
@@ -31,15 +36,11 @@ public class Event : MonoBehaviour
         }
     }
 
-    private void InvokeEventTwo()
-    {
-        Animator_Player.SetTrigger("LevelUp");
-    }
-
     private void InvokeEvent()
     {
         Animator_Player.SetTrigger("Atk");
-        _delegate();
-        //_delegate.Invoke();
+
+        if (_eventInvokHandler != null)
+            _eventInvokHandler.Invoke();
     }
 }
