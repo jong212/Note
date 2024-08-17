@@ -7,10 +7,10 @@ public class Event : MonoBehaviour
 {
     [SerializeField] Animator Animator_Player;
 
-    public delegate void ImDelegate();
+    public delegate void ImDelegate(int a);
     public static ImDelegate _customDelegate;
 
-    public static Action _customAction;
+    public static Action<int> _customAction;
     private void Start()
     {        
         _customDelegate += InvokeEvent;
@@ -22,12 +22,13 @@ public class Event : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _customAction.Invoke();
+            _customAction.Invoke(10);
         }
     }
 
-    private void InvokeEvent()
+    private void InvokeEvent(int a )
     {
+        Debug.Log(a);
         Animator_Player.SetTrigger("Atk");
     }
 }

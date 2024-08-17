@@ -11,7 +11,7 @@ public class SubsMemberOne : MonoBehaviour
         /*Event._customDelegate += OnEventMakerInvoked;*/
         Event._customAction += OnEventMakerInvoked;
     }
-    public void OnEventMakerInvoked()
+    public void OnEventMakerInvoked(int a)
     {
         Animator_SubMember.SetTrigger("Atk");
     }

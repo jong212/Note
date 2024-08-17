@@ -11,7 +11,7 @@ public class SubsMemberTwo : MonoBehaviour
         /*Event._customDelegate += OnEventLalala;*/
         Event._customAction += OnEventLalala;
     }
-    public void OnEventLalala()
+    public void OnEventLalala(int a)
     {
         Animator_SubMember.SetTrigger("LevelUp");
     }
